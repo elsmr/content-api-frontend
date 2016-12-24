@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
+import Root from './containers/Root';
+import {store, actions} from './redux/confStore'
+import './index.scss';
 
 ReactDOM.render(
-  <App />,
+  <Root actions={actions} store={store} />,
   document.getElementById('root')
 );
