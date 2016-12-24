@@ -60,6 +60,11 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/build/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/index.js"
+    ],
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
