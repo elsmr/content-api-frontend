@@ -1,5 +1,5 @@
 const initialState = {
-  loggedIn: false,
+  loggedIn: true,
   user: {}
 }
 
@@ -11,12 +11,11 @@ const actionTypes = {
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.LOGIN:
-      console.log(action)
-      return Object.assign(state,{loggedIn: true, user: action.user});
+      return {...state, loggedIn: true, user: action.user};
     case actionTypes.LOGOUT:
-      return Object.assign(state,{loggedIn: false, user: {}});
+      return {...state, loggedIn: false, user: {}};
     default:
-      return state;
+      return state
   }
 }
 
