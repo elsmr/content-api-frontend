@@ -1,0 +1,13 @@
+exports[`<Root /> renders with default props 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }>
+  <Connect(App) />
+</Provider>
+`;

@@ -1,7 +1,7 @@
 import { auth } from '../../utils/apiClient';
 import jwt from '../../utils/jwt';
 
-const initialState = {
+export const initialState = {
   prevUrl: '/',
   loggedIn: false,
   fetching: false,
