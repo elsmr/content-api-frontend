@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Collections = () => (
-  <div>Welcome to collections!</div>
+  <h2 className='title'>Welcome to Collections!</h2>
 );
 
 export default Collections;

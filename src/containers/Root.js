@@ -1,10 +1,11 @@
 import React from 'react';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
+import store from '../redux/store'
 import App from './App';
 
-const Root = ({store, actions}) => (
+const Root = () => (
   <Provider store={store}>
-    <App actions={actions} />
+    <App />
   </Provider>
 );
 

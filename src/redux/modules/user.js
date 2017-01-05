@@ -1,27 +1,80 @@
+import { auth } from '../../utils/apiClient';
+import jwt from '../../utils/jwt';
+
 const initialState = {
-  loggedIn: true,
+  prevUrl: '/',
+  loggedIn: false,
+  fetching: false,
   user: {}
-}
+};
 
-const actionTypes = {
-  'LOGIN': 'LOGIN',
-  'LOGOUT': 'LOGOUT'
-}
-
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch(action.type) {
-    case actionTypes.LOGIN:
-      return {...state, loggedIn: true, user: action.user};
-    case actionTypes.LOGOUT:
+    case 'LOGIN_PENDING':
+      return {...state, fetching: true};
+    case 'LOGIN_FULFILLED':
+      return {...state, fetching: false, loggedIn: true, user: action.user};
+    case 'LOGIN_REJECTED':
+      return {...state, fetching: false};
+    case 'LOGOUT':
       return {...state, loggedIn: false, user: {}};
+    case 'SET_PREV_URL':
+      return {...state, prevUrl: action.url};
+    case 'LOAD_TOKEN_FULFILLED':
+      return {...state, loggedIn: true, user: action.user}
     default:
-      return state
+      return state;
   }
 }
 
-const actions = {
-  login: (user) => ({type: actionTypes.LOGIN, user}),
-  logout: () => ({type: actionTypes.LOGOUT})
-}
+// actions
+export const loginPending = () => ({ type: 'LOGIN_PENDING'});
+export const loginRejected = () => ({ type: 'LOGIN_REJECTED'});
+export const loginFulfilled = (user) => ({ type: 'LOGIN_FULFILLED', user});
+export const setPrevUrl = (url) => ({type: 'SET_PREV_URL', url});
+export const loadTokenFulfilled = (user) => ({type: 'LOAD_TOKEN_FULFILLED', user});
+export const logout = () => {
+  jwt.remove();
+  return { type: 'LOGOUT' };
+};
 
-export default {actions, reducer}
+export const loadToken = () => {
+  return (dispatch) => {
+    const user = jwt.get();
+    if(user) {
+      dispatch(loadTokenFulfilled(user));
+      return true;
+    }
+    return false;
+  };
+};
+
+export const login = (user) => {
+  return (dispatch) => {
+    dispatch(loginPending());
+    return new Promise((resolve, reject) => {
+      auth(user)
+        .then((res) => {
+          if(res.status !== 200) {
+            dispatch(loginRejected());
+            reject();            
+          }
+          return res.json();
+        })
+        .then((json) => {
+          if(json.data) {
+            console.log(json.data)
+            jwt.store(json.data)
+            let user = jwt.decode(json.data);
+            console.log(user)
+            dispatch(loginFulfilled(user));
+            resolve()
+          }          
+        })
+        .catch((err) => {
+          dispatch(loginRejected());
+          reject();
+        });
+    }); 
+  };
+};
