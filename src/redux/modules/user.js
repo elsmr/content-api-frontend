@@ -5,7 +5,12 @@ const initialState = {
   prevUrl: '/',
   loggedIn: false,
   fetching: false,
-  user: {}
+  user: {
+    avatar_url: null,
+    username: null,
+    id: null,
+    permissions: {}
+  }
 };
 
 export const reducer = (state = initialState, action) => {
@@ -40,9 +45,10 @@ export const logout = () => {
 
 export const loadToken = () => {
   return (dispatch) => {
-    const user = jwt.getDecoded();
-    if(user) {
-      dispatch(loadTokenFulfilled(user));
+    const token = jwt.getDecoded();
+    console.log(token)
+    if(token) {
+      dispatch(loadTokenFulfilled(token.data));
       return true;
     }
     return false;
@@ -63,10 +69,11 @@ export const login = (user) => {
           return res.json();
         })
         .then((json) => {
-          if(json.data) {
-            jwt.store(json.data)
-            let user = jwt.decode(json.data);
-            dispatch(loginFulfilled(user));
+          let token = json.data;
+          if(token) {
+            jwt.store(token)
+            let decoded = jwt.decode(token);
+            dispatch(loginFulfilled(decoded.data));
             resolve()
           }          
         })

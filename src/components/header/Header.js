@@ -1,10 +1,12 @@
 import React from 'react';
 import NavLink from './NavLink';
 import Profile from './Profile';
+import './Header.scss';
 
 const Header = ({title, user, onLogout}) => (
-  <nav className="navbar">
-  <a className="navbar-brand" href="/">{title}</a>
+  <nav className="navbar navbar-dark bg-primary">
+  <div className="container">
+    <a className="navbar-brand" href="/">{title}</a>
     <ul className="nav navbar-nav">
       <NavLink to='/'>Home</NavLink>
       <NavLink to='/collections'>Collections</NavLink>
@@ -15,6 +17,7 @@ const Header = ({title, user, onLogout}) => (
         </div>     
       }
     </ul>
+  </div>  
   </nav>    
 );
 
