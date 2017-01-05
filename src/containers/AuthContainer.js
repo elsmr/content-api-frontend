@@ -4,8 +4,17 @@ import { connect } from 'react-redux';
 import { setPrevUrl } from '../redux/modules/user';
 
 class AuthContainer extends React.Component {
+  componentWillUpdate(nextProps) {
+    const { dispatch, url, user: { loggedIn }} = nextProps;
+
+    if (!loggedIn) {
+      dispatch(setPrevUrl(url));
+      browserHistory.replace("/login");
+    }
+  }
+
   componentWillMount() {
-    const { dispatch, url, user: { loggedIn }} = this.props
+    const { dispatch, url, user: { loggedIn }} = this.props;
 
     if (!loggedIn) {
       dispatch(setPrevUrl(url));
@@ -14,8 +23,8 @@ class AuthContainer extends React.Component {
   }
 
   render() {
-    const { loggedIn, children } = this.props;
-    return loggedIn ? children : null;
+    const { user: {loggedIn}, children } = this.props;
+    return loggedIn ? children : '';
   }
 }
 

@@ -40,7 +40,7 @@ export const logout = () => {
 
 export const loadToken = () => {
   return (dispatch) => {
-    const user = jwt.get();
+    const user = jwt.getDecoded();
     if(user) {
       dispatch(loadTokenFulfilled(user));
       return true;
@@ -55,6 +55,7 @@ export const login = (user) => {
     return new Promise((resolve, reject) => {
       auth(user)
         .then((res) => {
+          setTimeout(1000);
           if(res.status !== 200) {
             dispatch(loginRejected());
             reject();            
@@ -63,10 +64,8 @@ export const login = (user) => {
         })
         .then((json) => {
           if(json.data) {
-            console.log(json.data)
             jwt.store(json.data)
             let user = jwt.decode(json.data);
-            console.log(user)
             dispatch(loginFulfilled(user));
             resolve()
           }          

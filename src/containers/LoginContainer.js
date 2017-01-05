@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/forms/LoginForm';
 
 class LoginContainer extends React.Component {
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     if(nextProps.user.loggedIn) {
-      browserHistory.replace('/');
+      browserHistory.replace(nextProps.user.prevUrl);
     }
   }
 

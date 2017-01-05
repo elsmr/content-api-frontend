@@ -1,0 +1,14 @@
+@import './animations';
+
+@mixin loader {
+  animation: spin 500ms infinite linear;
+  border: 2px solid #fff;
+  border-radius: 290486px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  content: "";
+  display: flex;
+  height: 1rem;
+  width: 1rem;
+}
+  

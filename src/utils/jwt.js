@@ -17,9 +17,15 @@ const get = () => {
 	return sessionStorage.getItem(TOKEN_NAME);
 }
 
+const getDecoded = () => {
+  const token = get();
+  return token ? decode(token) : null;
+}
+
 export default {
 	decode,
 	store,
 	remove,
-	get
+	get,
+  getDecoded
 };

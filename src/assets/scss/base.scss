@@ -1,0 +1,15 @@
+@import './mixins';
+
+.is-loading {
+  color: transparent !important;
+  pointer-events: none;
+  position: relative;
+  &:after {
+    @include loader;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -0.5rem;
+    margin-left: -0.5rem;
+  }
+}
