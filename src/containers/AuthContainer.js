@@ -24,7 +24,7 @@ class AuthContainer extends React.Component {
 
   render() {
     const { user: {loggedIn}, children } = this.props;
-    return loggedIn ? children : '';
+    return loggedIn ? children : null;
   }
 }
 
