@@ -13,8 +13,8 @@ const onSubmit = (data, dispatch) => {
 
 const LoginForm = ({ error, submitting, handleSubmit}) => (
   <form className='form' onSubmit={handleSubmit(onSubmit)}>
-    <Field type='text' name="username" id='username' label='Username' component={FormField} />
-    <Field type='password' name="password" id='password' label='Password' component={FormField} />
+    <Field type='text' required name="username" id='username' label='Username' component={FormField} />
+    <Field type='password' required name="password" id='password' label='Password' component={FormField} />
   <div className="form-group">
     { error && <p className='alert alert-danger'>{error}</p> }
   </div>

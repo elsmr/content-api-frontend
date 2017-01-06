@@ -50,8 +50,8 @@ export const loginEpic = action$ =>
       auth(action.user)
         .map(res => res.response.data)
         .map(token => {
-          jwt.store(token)
-          return jwt.decode(token)
+          jwt.store(token);
+          return jwt.decode(token);
         })
         .filter(decoded => decoded)
         .map(decoded => decoded.data)
@@ -64,3 +64,8 @@ export const loginEpic = action$ =>
           return Observable.of(loginRejected());
         })
     );
+
+export const logoutEpic = action$ =>
+  action$.ofType('LOGOUT')
+    .map(action => jwt.remove())
+    .map(user => ({type: 'NULL'}))

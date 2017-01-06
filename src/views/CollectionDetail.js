@@ -1,7 +1,8 @@
 import React from 'react';
+import CollectionDetailContainer from '../containers/CollectionDetailContainer';
 
 const CollectionDetail = ({params}) => (
-  <h2 className='title'>Collection detail from {params.name}</h2>
+  <CollectionDetailContainer collection={params.name} />
 );
 
 export default CollectionDetail;

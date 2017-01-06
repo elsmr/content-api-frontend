@@ -1,0 +1,21 @@
+@include media-breakpoint-up(xs) {
+  .display-4 {
+    font-size: 2.5rem;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .profile-username {
+    vertical-align: top;
+    display: inline-block;
+    max-width: 4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .display-4 {
+    font-size: 3.5rem;
+  }
+}

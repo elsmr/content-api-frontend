@@ -1,7 +1,14 @@
 import React from 'react';
+import CollectionsContainer from '../containers/CollectionsContainer';
+import PageTitle from '../components/header/PageTitle';
 
 const Collections = () => (
-  <h2 className='title'>Welcome to Collections!</h2>
+  <div className="main-content">
+    <PageTitle title='Collections' />
+    <div className='container'>
+      <CollectionsContainer />
+    </div>
+  </div>
 );
 
 export default Collections;

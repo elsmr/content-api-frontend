@@ -5,7 +5,7 @@ const Profile = ({user : { user }, onLogout}) => (
   <div className='dropdown bg-primary'>
     <button className='btn btn-primary dropdown-toggle profile-dropdown' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
       <img src={user.avatar_url ? user.avatar_url : `https://placeholdit.imgix.net/~text?txtsize=65&txt=${user.username.toUpperCase()[0]}&w=100&h=100`} alt="Your avatar" className="rounded-circle profile-avatar" />
-      <span>{user.username}</span>
+      <span className="profile-username">{user.username}</span>
     </button>
     <div className='dropdown-menu'>
       <h6 className='dropdown-header'>{ user.permissions.admin ? 'Administrator' : 'Profile'}</h6>

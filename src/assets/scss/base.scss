@@ -1,5 +1,3 @@
-@import './mixins';
-
 .is-loading {
   color: transparent !important;
   pointer-events: none;
@@ -28,4 +26,16 @@
 
 .profile-dropdown {
   padding: 0.5rem;
+}
+
+.main-content .container {
+  margin-top: 1em;
+}
+
+.is-loading.spinner:after {
+  border-width: 3px;
+  border-bottom-color: $primary-color;
+  border-left-color: $primary-color;
+  width: 2em;
+  height: 2em;
 }

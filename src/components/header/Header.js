@@ -25,7 +25,7 @@ const Header = ({title, user, onLogout}) => (
         </div>
       </div>
     </div>
-  </nav>    
+  </nav>   
 );
 
 export default Header;

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Login.scss';
+import { Link } from 'react-router';
 
 const Login = () => (
 	<div className="full-height center">
@@ -7,7 +8,7 @@ const Login = () => (
 			<h1 className='display-3'>404 Not Found</h1>
 			<p className='lead'>It seems you are lost</p>
 			<p>
-				<a href="/" className="btn btn-primary">Go back home</a>
+				<Link to="/" className="btn btn-primary">Go back home</Link>
 			</p>
 		</div>		
 	</div>	

@@ -4,6 +4,12 @@ import { browserHistory } from 'react-router';
 import LoginForm from '../components/forms/LoginForm';
 
 class LoginContainer extends React.Component {
+  componentWillMount() {
+    if(this.props.user.loggedIn) {
+      browserHistory.replace(this.props.user.prevUrl);
+    }
+  }
+
   componentWillUpdate(nextProps) {
     if(nextProps.user.loggedIn) {
       browserHistory.replace(nextProps.user.prevUrl);

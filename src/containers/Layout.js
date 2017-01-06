@@ -15,10 +15,8 @@ class Layout extends React.Component {
             {message}
           </div>
         }
-        <Header title='Capi' user={user} onLogout={onLogout} />
-        <div className='container'>
+        <Header title='Capi' user={user} onLogout={onLogout} />        
           {this.props.children}
-        </div>
       </div>
     )
   }
