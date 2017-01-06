@@ -4,8 +4,9 @@ import { login } from '../../redux/modules/user';
 import FormField from './FormField';
 
 const onSubmit = (data, dispatch) => {
-  return dispatch(login(data))
-    .catch((err) => {
+  return new Promise((resolve, reject) => {
+    dispatch(login(data, resolve, reject))
+  }).catch((err) => {
       throw new SubmissionError({ _error: 'Username or password is incorrect.'});
     });
 }

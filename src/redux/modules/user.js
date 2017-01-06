@@ -1,10 +1,11 @@
 import { auth } from '../../utils/apiClient';
 import jwt from '../../utils/jwt';
+import 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 export const initialState = {
   prevUrl: '/',
   loggedIn: false,
-  fetching: false,
   user: {
     avatar_url: null,
     username: null,
@@ -15,18 +16,12 @@ export const initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch(action.type) {
-    case 'LOGIN_PENDING':
-      return {...state, fetching: true};
     case 'LOGIN_FULFILLED':
-      return {...state, fetching: false, loggedIn: true, user: action.user};
-    case 'LOGIN_REJECTED':
-      return {...state, fetching: false};
+      return {...state, loggedIn: true, user: action.user};
     case 'LOGOUT':
       return {...state, loggedIn: false, user: {}};
     case 'SET_PREV_URL':
       return {...state, prevUrl: action.url};
-    case 'LOAD_TOKEN_FULFILLED':
-      return {...state, loggedIn: true, user: action.user}
     default:
       return state;
   }
@@ -37,50 +32,35 @@ export const loginPending = () => ({ type: 'LOGIN_PENDING'});
 export const loginRejected = () => ({ type: 'LOGIN_REJECTED'});
 export const loginFulfilled = (user) => ({ type: 'LOGIN_FULFILLED', user});
 export const setPrevUrl = (url) => ({type: 'SET_PREV_URL', url});
-export const loadTokenFulfilled = (user) => ({type: 'LOAD_TOKEN_FULFILLED', user});
-export const logout = () => {
-  jwt.remove();
-  return { type: 'LOGOUT' };
-};
+export const loadToken = () => ({type: 'LOAD_TOKEN'});
+export const login = (user, resolve, reject) => ({ type: 'LOGIN', user, resolve, reject });
+export const logout = () => ({ type: 'LOGOUT' });
 
-export const loadToken = () => {
-  return (dispatch) => {
-    const token = jwt.getDecoded();
-    console.log(token)
-    if(token) {
-      dispatch(loadTokenFulfilled(token.data));
-      return true;
-    }
-    return false;
-  };
-};
+// epics
+export const loadTokenEpic = action$ => 
+  action$.ofType('LOAD_TOKEN')
+    .map(action => jwt.getDecoded())
+    .filter(decoded => decoded)
+    .map(decoded => decoded.data)
+    .map(user => loginFulfilled(user))
 
-export const login = (user) => {
-  return (dispatch) => {
-    dispatch(loginPending());
-    return new Promise((resolve, reject) => {
-      auth(user)
-        .then((res) => {
-          setTimeout(1000);
-          if(res.status !== 200) {
-            dispatch(loginRejected());
-            reject();            
-          }
-          return res.json();
+export const loginEpic = action$ =>
+  action$.ofType('LOGIN')
+    .mergeMap(action =>
+      auth(action.user)
+        .map(res => res.response.data)
+        .map(token => {
+          jwt.store(token)
+          return jwt.decode(token)
         })
-        .then((json) => {
-          let token = json.data;
-          if(token) {
-            jwt.store(token)
-            let decoded = jwt.decode(token);
-            dispatch(loginFulfilled(decoded.data));
-            resolve()
-          }          
+        .filter(decoded => decoded)
+        .map(decoded => decoded.data)
+        .map(user => {
+          action.resolve();
+          return loginFulfilled(user);
         })
-        .catch((err) => {
-          dispatch(loginRejected());
-          reject();
-        });
-    }); 
-  };
-};
+        .catch(error => {
+          action.reject();
+          return Observable.of(loginRejected());
+        })
+    );

@@ -1,12 +1,14 @@
 const endpoint = require('../../config/api.js').endpoint;
-import 'whatwg-fetch';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/dom/ajax';
 
-export const auth = (user) => {
-	return fetch(`${endpoint}/auth`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-      });
-}
+export const auth = user =>
+	Observable.ajax({
+    url: `${endpoint}/auth`,
+    method: 'POST',
+    body: user,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    responseType: 'json'
+  });
