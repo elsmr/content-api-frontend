@@ -7,7 +7,8 @@ import Layout from './Layout';
 import AuthContainer from './AuthContainer';
 import Home from '../views/Home';
 import Collections from '../views/Collections';
-import CollectionDetail from '../views/CollectionDetail'
+import CollectionDetail from '../views/CollectionDetail';
+import CollectionItems from '../views/CollectionItems';
 import Login from '../views/Login';
 import NotFound from '../views/NotFound';
 
@@ -19,12 +20,15 @@ class App extends React.Component {
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path='/' component={Layout}>
-          <Route component={AuthContainer}>
+        <Route component={AuthContainer}>
+          <Route path='/' component={Layout}>
             <IndexRoute component={Home} />
             <Route path='collections'>
               <IndexRoute component={Collections} />
-              <Route path=':name' component={CollectionDetail} />
+              <Route path=':name'>
+                <IndexRoute component={CollectionDetail} />
+                <Route path='items' component={CollectionItems} />
+              </Route>
             </Route>
           </Route>          
         </Route>

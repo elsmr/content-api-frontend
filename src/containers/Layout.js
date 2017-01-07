@@ -16,7 +16,10 @@ class Layout extends React.Component {
           </div>
         }
         <Header title='Capi' user={user} onLogout={onLogout} />        
-          {this.props.children}
+          {
+            React.Children
+              .map(this.props.children, child => React.cloneElement(child, {...child.props, user}))
+          }
       </div>
     )
   }

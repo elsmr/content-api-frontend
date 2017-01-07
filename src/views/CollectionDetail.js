@@ -1,8 +1,10 @@
 import React from 'react';
 import CollectionDetailContainer from '../containers/CollectionDetailContainer';
 
-const CollectionDetail = ({params}) => (
-  <CollectionDetailContainer collection={params.name} />
+const CollectionDetail = ({params, user}) => (
+  <div>
+     <CollectionDetailContainer user={user} name={params.name} />
+  </div>
 );
 
 export default CollectionDetail;

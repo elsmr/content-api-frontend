@@ -28,10 +28,20 @@ export const getCollections = token =>
     ...commonParams
   });
 
+export const getCollection = (token, name) =>
+  Observable.ajax({
+    url: `${endpoint}/collections/${name}`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      ...commonHeaders
+    },
+    ...commonParams
+  });
+
 
 export const getCollectionItems = (token, collName) =>
   Observable.ajax({
-    url: `${endpoint}/collections/${collName}`,
+    url: `${endpoint}/collections/${collName}/items`,
     headers: {
       'Authorization': `Bearer ${token}`,
       ...commonHeaders

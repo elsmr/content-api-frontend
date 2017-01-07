@@ -4,15 +4,14 @@ import 'rxjs';
 import { Observable } from 'rxjs/Observable';
 
 export const initialState = {
-  collection: {},
   error: null,
-  data: []
+  list: []
 };
 
 export const reducer = (state = initialState, action) => {
   switch(action.type) {
     case 'FETCH_ITEMS_FULFILLED':
-      return {error: null, data: action.items};
+      return {error: null, list: action.items};
     case 'FETCH_ITEMS_REJECTED':
       return {...state, error: action.error};
     case 'DELETE_ITEMS':
@@ -34,6 +33,6 @@ export const fetchItemsEpic = action$ =>
     .mergeMap(action => 
       getCollectionItems(jwt.get(), action.collName)
         .map(res => res.response.data)
-        .map(data => fetchItemsFulfilled(data))
+        .map(items => fetchItemsFulfilled(items))
         .catch(err => Observable.of(fetchItemsRejected(err)))
     );
