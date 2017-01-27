@@ -9,6 +9,7 @@ import Home from '../views/Home';
 import Collections from '../views/Collections';
 import CollectionDetail from '../views/CollectionDetail';
 import CollectionItems from '../views/CollectionItems';
+import ItemDetail from '../views/ItemDetail'
 import Login from '../views/Login';
 import NotFound from '../views/NotFound';
 
@@ -27,10 +28,13 @@ class App extends React.Component {
               <IndexRoute component={Collections} />
               <Route path=':name'>
                 <IndexRoute component={CollectionDetail} />
-                <Route path='items' component={CollectionItems} />
+                <Route path='items'>
+                  <IndexRoute component={CollectionItems} />
+                  <Route path=':id' component={ItemDetail} />
+                </Route>
               </Route>
             </Route>
-          </Route>          
+          </Route>
         </Route>
         <Route path='/login' component={Login} />
         <Route path="*" component={NotFound}/>

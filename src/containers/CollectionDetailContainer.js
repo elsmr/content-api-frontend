@@ -11,13 +11,13 @@ class CollectionDetailContainer extends React.Component {
   }
 
   render() {
-    const { collections : {selected}, user, name } = this.props;
+    const { collections : { selected }, user: { user : { permissions } }, name } = this.props;
     return Object.keys(selected).length === 0 ? <div className='spinner is-loading'>Loading...</div> : (
       <div className="main-content">
         <PageTitle title={selected.displayName || selected.name} />
         <div className='container'>
           <p>
-            { 
+            {
               selected.lang
                 .map(lang => <span key={lang} className="badge badge-pill">{lang}</span>)
             }
@@ -28,7 +28,7 @@ class CollectionDetailContainer extends React.Component {
                 <div key={field.name}>
                   <div className="col-sm text-weight-bold">{field.name}</div>
                   <div className="col-sm">{field.type}</div>
-                  { user.admin &&
+                  { permissions.admin &&
                     <div className="col-sm">
                       <button className="btn btn-primary">Edit</button>
                       <button className="btn btn-danger">Delete</button>

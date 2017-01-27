@@ -1,8 +1,8 @@
 import React from 'react';
 import CollectionItemsContainer from '../containers/CollectionItemsContainer';
 
-const CollectionDetail = ({params}) => (
+const CollectionItems = ({params}) => (
   <CollectionItemsContainer name={params.name} />
 );
 
-export default CollectionDetail;
+export default CollectionItems;

@@ -13,7 +13,7 @@ export const auth = user =>
 	Observable.ajax({
     method: 'POST',
     url: `${endpoint}/auth`,
-    headers: {...commonHeaders},
+    headers: commonHeaders,
     body: user,
     ...commonParams
   });
@@ -42,6 +42,17 @@ export const getCollection = (token, name) =>
 export const getCollectionItems = (token, collName) =>
   Observable.ajax({
     url: `${endpoint}/collections/${collName}/items`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      ...commonHeaders
+    },
+    ...commonParams
+  });
+
+
+export const getItem = (token, collName, id) =>
+  Observable.ajax({
+    url: `${endpoint}/collections/${collName}/items/${id}`,
     headers: {
       'Authorization': `Bearer ${token}`,
       ...commonHeaders

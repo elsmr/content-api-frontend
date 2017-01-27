@@ -23,8 +23,8 @@ class CollectionDetailContainer extends React.Component {
           }
           <div className='list-group'>
             { collectionItems.list.length > 0 ?
-              collectionItems.list.map(item => 
-                <Link to={`/collections/${item.name}`} key={item._id} className='list-group-item list-group-item-action'>{item.name}</Link>
+              collectionItems.list.map(item =>
+                <Link to={`/collections/${collection.name}/items/${item._id}`} key={item._id} className='list-group-item list-group-item-action'>{item.name}</Link>
               ) :
               <div className='list-group-item disabled'>No items found</div>
             }

@@ -3,7 +3,7 @@ import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { reducer as form } from 'redux-form';
 import { reducer as user, loginEpic, logoutEpic, loadTokenEpic } from './modules/user';
 import { reducer as collections, fetchCollectionsEpic, fetchCollectionEpic } from './modules/collections';
-import { reducer as collectionItems, fetchItemsEpic } from './modules/collectionItems';
+import { reducer as collectionItems, fetchItemsEpic, fetchItemEpic } from './modules/collectionItems';
 import thunk from 'redux-thunk';
 
 const rootEpic = combineEpics(
@@ -12,7 +12,8 @@ const rootEpic = combineEpics(
   loadTokenEpic,
   fetchCollectionsEpic,
   fetchCollectionEpic,
-  fetchItemsEpic
+  fetchItemsEpic,
+  fetchItemEpic
 );
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
